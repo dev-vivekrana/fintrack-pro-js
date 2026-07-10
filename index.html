@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/47502ed027.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <aside>
+        <div class="logo">
+        <i class="fa-solid fa-layer-group"></i>
+        <div class="logo-txt">
+            <h2>FinTrack Pro</h2>
+            <p>Enterprise Finance</p>
+        </div>
+      </div>
+      <div class="aside-links-section">
+        <div class="aside-item-container active">
+            <a href="">
+                <i class="fa-solid fa-border-all"></i>
+                Dashboard</a>
+        </div>
+        <div class="aside-item-container active">
+            <a href="">
+                <i class="fa-solid fa-gear"></i>
+                Settings</a>
+        </div>
+      </div>
+      <button id="add-transactions-btn">
+        <i class="fa-solid fa-plus"></i>Add Transactions
+      </button>
+    </aside>
+      <section>
+        <nav>
+          <div class="user">|</div>
+          <button id="logout-btn">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>Logout
+          </button>
+        </nav>
+        <div class="hero-section">
+          <div class="main-heading">
+            <h1>Financial Overview</h1>
+            <p>Real-time tracking application</p>
+          </div>
+          <div class="card-container">
+            <div class="card">
+              <div class="card-icon bg-blue">
+                <i class="fa-solid fa-building-columns bg-blue"></i>
+              </div>
+              <span class="about-card">Current Balance</span>
+              <h3 class="card-amount">$0.00</h3>
+            </div>
+            <div class="card">
+              <div class="card-icon bg-green">
+                <i class="fa-solid fa-arrow-trend-up bg-green"></i>
+              </div>
+              <span class="about-card">Total Income</span>
+              <h3 class="card-amount bg-green card-amount-color">$0.00</h3>
+            </div>
+            <div class="card">
+              <div class="card-icon bg-red">
+                <i class="fa-solid fa-arrow-trend-down bg-red"></i>
+              </div>
+              <span class="about-card">Total Expense</span>
+              <h3 class="card-amount bg-red card-amount-color">$0.00</h3>
+            </div>
+            <div class="card">
+              <div class="card-icon bg-blue">
+                <i class="fa-solid fa-piggy-bank bg-blue"></i>
+              </div>
+              <span class="about-card">Total Transactions</span>
+              <h3 class="card-amount">0</h3>
+            </div>
+          </div>
+          <div class="graph-preferences-container">
+            <div class="cash-flow container">
+              <h3 class="h3-heading">Cash Flow Analysis</h3>
+              <!-- <div class="marker">
+                <div class="rectangle"></div>
+                <span>Income</span>
+            </div> -->
+            </div>
+            <div class="preferences container">
+              <h3 class="h3-heading">Preferences</h3>
+              <div class="dark-mode">
+                <h4>Dark Mode</h4>
+              </div>
+              <div class="line"></div>
+              <button class="reset-btn">
+                <i class="fa-solid fa-trash"></i>Reset All Data
+              </button>
+            </div>
+          </div>
+          <div class="transactions container">
+            <h3 class="h3-heading">All Transactions</h3>
+            <div class="search-select">
+                <div class="search">
+                
+                <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search transactions..." id="search">
+            
+            </div>
+            <div class="menu-types">
+                <select name="menu" id="menu">
+                    <option value="all">All Types</option>
+                    <option value=income">Income Only</option>
+                    <option value="expense">Expense Only</option>
+                </select>
+                
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
