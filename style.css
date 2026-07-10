@@ -189,6 +189,7 @@ cursor: pointer;
 }
 .hero-section{
     padding: 32px;
+    display: none;
 }
 .main-heading{
     margin: 0px 0px 24px 0px;
