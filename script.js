@@ -116,6 +116,23 @@ darkMode.addEventListener("click",()=>{
 closeModal();
 })
 
+modalForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    
+    console.log(moneyTypeModal.value);
+    console.log(modalDescription.value);
+    console.log(modalAmount.value);
+    console.log(modalDate.value);
+    console.log(modalCategory.value);
+    closeModal();
+    tableBody.innerHTML +=`<tr>
+                <td>2026-07-11</td>
+                <td>asdf</td>
+                <td>Shopping</td>
+                <td>-$12.00</td>
+                <td>Icon</td>
+              </tr>`;
+});
 
 
 
