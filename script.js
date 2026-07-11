@@ -77,3 +77,66 @@ if(loginForm){
     })
     }
 }
+
+
+// Modal Window
+
+
+const addTransactionsBtn = document.querySelector(".add-transactions-btn");
+const darkMode = document.querySelector(".dark-mode");
+const modalWindow = document.querySelector(".modal-container");
+const closeModalBtn = document.querySelector(".close-modal");
+const modalForm = document.querySelector(".modal-form")
+const moneyTypeModal = document.querySelector("#money-type-modal")
+const modalDescription = document.querySelector("#description");
+const modalAmount = document.querySelector("#modal-amount");
+const modalDate = document.querySelector("#modal-date");
+const modalCategory = document.querySelector("#modal-category");
+const tableBody = document.querySelector("#table-body");
+
+
+function closeModal(){
+modalWindow.classList.add("hidden");
+darkMode.classList.add("hidden");
+}
+function openModal(){
+modalWindow.classList.remove("hidden");
+darkMode.classList.remove("hidden");
+}
+
+
+addTransactionsBtn.addEventListener("click",()=>{
+    openModal();
+})
+
+closeModalBtn.addEventListener("click",()=>{
+    closeModal();
+})
+darkMode.addEventListener("click",()=>{
+closeModal();
+})
+
+
+
+
+
+// Side Bar 
+
+const dashboard = document.querySelector(".dashboard-section");
+const settings = document.querySelector(".settings-section");
+const dashboardBtn = document.querySelector(".dashboard-btn");
+const settingsBtn = document.querySelector(".settings-btn");
+
+
+dashboardBtn.addEventListener("click", (event) => {
+    dashboard.classList.remove("hidden")
+    dashboardBtn.classList.add("active");
+    settings.classList.add("hidden");
+    settingsBtn.classList.remove("active");
+});
+settingsBtn.addEventListener("click", (event) => {
+    settings.classList.remove("hidden");
+    settingsBtn.classList.add("active");
+    dashboard.classList.add("hidden");
+    dashboardBtn.classList.remove("active");
+});

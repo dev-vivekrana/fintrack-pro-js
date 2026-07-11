@@ -22,7 +22,7 @@ html, body,main {
     --primary-blue-text: #1e40af;
 
     --background:#F8FAFC;
-    --background-card:#FFFFFF;
+    --background-card:#F8F9FB;
     --border:#CCCCCC;
     --border-color: #e5e7eb;
 
@@ -109,14 +109,32 @@ font-size: 16px;
     color: var(--primary);
 }
 main{
-    display: flex;
-    font-family: inter;
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: inter;
+position: relative;
+    
 }
+.dark-mode{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.494);
+    z-index: 2;
+}
+
+
+/* Side Bar */
+
+
 aside{
     height: 100%;
     width: 17%;
     padding: 24px;
     border: 1px solid var(--border-color);
+    position: sticky;
+    /* background-color: red; */
 }
 .logo{
     font-size:24px;
@@ -136,19 +154,25 @@ font-size: 18px;
     height: 85%;
     /* background-color: red; */
 }
-.active{
+.aside-item-container{
     /* background-color: crimson; */
-    background-color: var(--primary-blue);
     padding: 12px 16px;
     margin: 0 0 8px;
     border-radius: 8px;
+    cursor: pointer;
+    color: var(--light-color);
 }
-.aside-item-container a{
+.active{
+background-color: var(--primary-blue);
+color: var(--primary-blue-text);
+}
+.aside-item-container p{
     font-size: 16px;
     text-decoration: none;
-    color: var(--primary-blue-text);
+    font-weight: 500;
+    
 }
-#add-transactions-btn{
+.btn{
     width: 100%;
     background-color: black;
     color: white;
@@ -157,6 +181,13 @@ font-size: 18px;
     padding: 14px;
     border-radius: 8px;
 }
+.add-transactions-btn{
+    cursor: pointer;
+}
+
+/* Section */
+
+
 section{
     background-color: #F8F9FB;
     height: 100%;
@@ -189,7 +220,9 @@ cursor: pointer;
 }
 .hero-section{
     padding: 32px;
-    display: none;
+}
+.dashboard-section{
+    /* display: none; */
 }
 .main-heading{
     margin: 0px 0px 24px 0px;
@@ -268,16 +301,16 @@ color: var(--light-color);
 }
 .h3-heading{
     font-size: 24px;
-    margin: 0 0 16px;
+    margin-bottom: 16px;
 }
 .preferences{
     width: 25%;
 }
 .transactions{
     width: 65%;
-    background-color: var(--background-card);
+    background-color: white;
 }
-.dark-mode{
+.dark-mode-section{
     padding: 16px 0px;
 }
 .line{
@@ -315,21 +348,138 @@ color: var(--light-color);
     width: 35%;
     padding: 10px 16px;
     /* background-color: crimson; */
-    background-color: #F8F9FB;
+    background-color: var(--background-card);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 .search #search{
+    text-decoration: none;
     border: none;
+    outline: none;
     background-color: #F8F9FB;
     
 }
 .menu-types{
-    width: 60%;
+    width: 65%;
     /* background-color: red; */
 }
-.menu-types #menu{
+.drop-down-menu{
     padding: 10px;
     width: 100%;
     background-color: var(--background-card);
     border: 1px solid var(--border-color);
     border-radius: 8px;
+}
+
+.table-container{
+    width: 100%;
+    /* background-color: red; */
+}
+.table-container table{
+    width: 100%;
+    /* background-color: blue; */
+    border-collapse: collapse;
+}
+#table-header td{ 
+    padding: 12px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--light-color);
+    /* background-color: yellow; */
+    /* outline: 3px solid red; */
+    width: 20%;
+    border-bottom: 1px solid var(--border-color);
+
+}
+#table-body td{
+    font-size: 14px;
+    padding: 16px 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Settings Section */
+
+
+
+.settings-section{
+    /* display: none; */
+}
+.profile-card{
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    width: 65%;
+}
+.profile-card h3{
+    font-size: 24px;
+    margin: 0 0 16px;
+}
+.form-container{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 1rem;
+    margin-bottom: 20px;
+}
+.form-input{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 12px;
+    
+    
+}
+.form-input span{
+    font-size: 14px;
+    font-weight: 500;
+}
+.form-input input{
+    padding: 10px;
+    background-color: var(--background-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+.save-changes-btn{
+    width: fit-content;
+    padding: 10px 20px;
+    margin: 30px 0 10px;}
+
+
+/* Modal Pop up Window */
+
+
+.modal-container{
+    z-index: 3;
+    width: 25rem;
+    position: absolute;
+    background-color:#FFFFFF;
+    padding: 20px;
+    border-radius: 8px;
+}
+.modal .header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.modal-title{
+    font-size: 19px;
+}
+.close-modal{
+    font-size: 24px;
+    cursor: pointer;
+}
+.amount-date{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 1rem;
+}
+.save-transaction-btn{
+    padding: 10px 20px;
+}
+.hidden{
+    display: none;
 }

@@ -22,7 +22,7 @@
   </head>
   <body>
     <main>
-      <aside>
+        <aside>
         <div class="logo">
         <i class="fa-solid fa-layer-group"></i>
         <div class="logo-txt">
@@ -31,18 +31,18 @@
         </div>
       </div>
       <div class="aside-links-section">
-        <div class="aside-item-container active">
-            <a href="">
+        <div class="aside-item-container active dashboard-btn">
+            <p>
                 <i class="fa-solid fa-border-all"></i>
-                Dashboard</a>
+                Dashboard</p>
         </div>
-        <div class="aside-item-container active">
-            <a href="">
+        <div class="aside-item-container settings-btn">
+            <p>
                 <i class="fa-solid fa-gear"></i>
-                Settings</a>
+                Settings</p>
         </div>
       </div>
-      <button id="add-transactions-btn">
+      <button class="add-transactions-btn btn">
         <i class="fa-solid fa-plus"></i>Add Transactions
       </button>
     </aside>
@@ -53,7 +53,7 @@
             <i class="fa-solid fa-arrow-right-from-bracket"></i>Logout
           </button>
         </nav>
-        <div class="hero-section">
+        <div class="dashboard-section hero-section ">
           <div class="main-heading">
             <h1>Financial Overview</h1>
             <p>Real-time tracking application</p>
@@ -98,7 +98,7 @@
             </div>
             <div class="preferences container">
               <h3 class="h3-heading">Preferences</h3>
-              <div class="dark-mode">
+              <div class="dark-mode-section">
                 <h4>Dark Mode</h4>
               </div>
               <div class="line"></div>
@@ -114,10 +114,9 @@
                 
                 <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" placeholder="Search transactions..." id="search">
-            
             </div>
             <div class="menu-types">
-                <select name="menu" id="menu">
+                <select name="menu" class="drop-down-menu">
                     <option value="all">All Types</option>
                     <option value=income">Income Only</option>
                     <option value="expense">Expense Only</option>
@@ -125,9 +124,100 @@
                 
             </div>
             </div>
+            <div class="table-container">
+              <table>
+                <tr id="table-header">
+                <td>DATE </td>
+                <td>DESCRIPTION</td>
+                <td>CATEGORY</td>
+                <td>AMOUNT</td>
+                <td>ACTIONS</td>
+              </tr>
+              <tbody id="table-body">
+                
+              </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="settings-section hero-section hidden">
+            <div class="main-heading">
+            <h1>Settings</h1>
+            <p>Manage your account profile and app formatting.</p>
+          </div>
+           <div class="profile-card-container">
+            <div class="profile-card">
+                <h3>Profile Details</h3>
+                <div class="form-container">
+                    <div class="form-input">
+                    <span>Full Name</span>
+                    <input type="text">
+                </div>
+                <div class="form-input">
+                    <span>Primary Currency</span>
+                    <select name="menu" class="drop-down-menu">
+                        <option value="">USD ($)</option>
+                        <option value="">EUR (€)</option>
+                        <option value="">GBP (£)</option>
+                        <option value="">INR (₹)</option>
+                        <option value="">JPY (¥)</option>
+                    </select>
+                </div>
+            </div>
+            <button class="save-changes-btn btn">Save Changes</button></div>
+            
           </div>
         </div>
       </section>
+      <div class="modal-container hidden">
+        <form class="modal-form">
+          <div class="modal">
+            <div class="header">
+                <h3 class="modal-title">Add Transaction</h3>
+                <span class="close-modal">×</span>
+            </div>
+            <div class="form-input">
+                    <span>Type</span>
+                    <select name="money-type-modal" id="money-type-modal" class="drop-down-menu">
+                        <option value="expense">Expense</option>
+                        <option value="income">Income</option>
+                    </select>
+            </div>
+            <div class="form-input">
+                    <span>Description</span>
+                    <input type="text" id="description" placeholder="e.g. Amazon, Salary, Coffee">
+            </div>
+            <div class="amount-date">
+                <div class="form-input">
+                    <span>Amount</span>
+                    <input type="number" id="modal-amount">
+            </div>
+            <div class="form-input">
+                    <span>Date</span>
+                    <input type="date" id="modal-date">
+            </div>
+            </div>
+            <div class="form-input">
+                    <span>Category</span>
+                    <select name="menu" class="drop-down-menu" id="modal-category">
+                        <option value="Food&Dining">Food & Dining</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Recharge & Bill">Recharge & Bill</option>
+                        <option value="Petrol & Auto">Petrol & Auto</option>
+                        <option value="Utilites">Utilites</option>
+                        <option value="Salary">Salary</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Others">Others</option>
+                    </select>
+            </div>
+            <button class="btn save-transaction-btn">Save Transaction</button>
+        </div>
+        </form>
+      </div>
+      <div class="dark-mode hidden">
+      </div>
     </main>
+    <script src="script.js"></script>
   </body>
 </html>
+
