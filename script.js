@@ -93,46 +93,102 @@ const modalAmount = document.querySelector("#modal-amount");
 const modalDate = document.querySelector("#modal-date");
 const modalCategory = document.querySelector("#modal-category");
 const tableBody = document.querySelector("#table-body");
+const dateCell = document.querySelector(".date");
 
 
 function closeModal(){
 modalWindow.classList.add("hidden");
 darkMode.classList.add("hidden");
-}
+};
 function openModal(){
 modalWindow.classList.remove("hidden");
 darkMode.classList.remove("hidden");
+};
+
+
+// Getting data from local Storage
+function getTransactionsFromLSD(){
+
 }
 
+let LSDTrasactionsDatabase= localStorage.getItem("transactions");
+let transactionsDatabase = JSON.parse(LSDTrasactionsDatabase);
+if (!transactionsDatabase) transactionsDatabase = [];
 
-addTransactionsBtn.addEventListener("click",()=>{
+// Modal window open 
+  addTransactionsBtn.addEventListener("click", () => {
     openModal();
-})
 
+    const today = new Date();
+    const formattedDate = today.toISOString().split("T")[0];
+
+    modalDate.value = formattedDate;
+  });
+
+//  Modal Window close using button
 closeModalBtn.addEventListener("click",()=>{
     closeModal();
 })
+
+// Modal window close by clicking on body
 darkMode.addEventListener("click",()=>{
 closeModal();
 })
 
-modalForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    
-    console.log(moneyTypeModal.value);
-    console.log(modalDescription.value);
-    console.log(modalAmount.value);
-    console.log(modalDate.value);
-    console.log(modalCategory.value);
-    closeModal();
-    tableBody.innerHTML +=`<tr>
-                <td>2026-07-11</td>
-                <td>asdf</td>
-                <td>Shopping</td>
-                <td>-$12.00</td>
-                <td>Icon</td>
+
+// logic for loading the transactions
+if (transactionsDatabase) {
+  console.log(transactionsDatabase);
+
+    loadtransactions();
+  function loadtransactions() {
+    tableBody.innerHTML = "";
+      for (value of transactionsDatabase) {
+        console.log(value);
+      tableBody.innerHTML += `<tr>
+                <td class = "date">${value.date}</td>
+                <td>${value.description}</td>
+                <td id="category-cell">${value.category}</td>
+                <td>${value.amount}</td>
+                <td><button class="edit-btn actions-btn"><i class="fa-solid fa-pen"></i></button>
+              <button class="delete-btn actions-btn"><i class="fa-solid fa-trash"></i></button></td>
               </tr>`;
+      console.log("hello");
+    }
+    
+}
+
+  
+  
+}
+
+
+// collecting data from modal window while pressing save transactions btn
+modalForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  closeModal();
+
+
+  const transaction = {
+    date: modalDate.value,
+    description: modalDescription.value,
+    category: modalCategory.value,
+    amount: modalAmount.value,
+  };
+
+  transactionsDatabase.push(transaction);
+  // Adding data into local storage transactions database
+  localStorage.setItem("transactions", JSON.stringify(transactionsDatabase));
+  console.log(transactionsDatabase);
+  console.log("hello")
+//   LSDTrasactionsDatabase = localStorage.getItem("transactions");
+//   transactionsDatabase = JSON.parse(LSDTrasactionsDatabase);
+//  console.log(transactionsDatabase);
+  //  calling ui
+  loadtransactions();
+  modalForm.reset();
 });
+
 
 
 
@@ -157,3 +213,8 @@ settingsBtn.addEventListener("click", (event) => {
     dashboard.classList.add("hidden");
     dashboardBtn.classList.remove("active");
 });
+
+const now = Date.now();
+console.log(now); 
+
+
