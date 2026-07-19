@@ -79,6 +79,32 @@ if (loginForm) {
   }
 }
 
+// getting profile data from local storage
+let profile = JSON.parse(localStorage.getItem("profile-settings")) || {
+  fullName: "vivek",
+  currency: "$",
+};
+console.log(profile);
+//SETTINGS
+
+// Currency
+const profileForm = document.querySelector("#profile-details-form");
+const profileFullName = document.querySelector("#full-name");
+const primaryCurrency = document.querySelector("#primary-currency");
+profileForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+        profile = {
+        fullName : profileFullName.value,
+        currency : primaryCurrency.value
+    };
+    localStorage.setItem("profile-settings", JSON.stringify(profile));
+    loadtransactions();
+    totalIncome();
+    alert("Settings saved successfully!");
+});
+
+
+
 // Modal Window
 
 const addTransactionsBtn = document.querySelector(".add-transactions-btn");
@@ -86,13 +112,23 @@ const darkMode = document.querySelector(".dark-mode");
 const modalWindow = document.querySelector(".modal-container");
 const closeModalBtn = document.querySelector(".close-modal");
 const modalForm = document.querySelector(".modal-form");
-const moneyTypeModal = document.querySelector("#money-type-modal");
+const modalMoneyType = document.querySelector("#money-type-modal");
 const modalDescription = document.querySelector("#description");
 const modalAmount = document.querySelector("#modal-amount");
 const modalDate = document.querySelector("#modal-date");
 const modalCategory = document.querySelector("#modal-category");
 const tableBody = document.querySelector("#table-body");
 const dateCell = document.querySelector(".date");
+const modalTitle = document.querySelector(".modal-title");
+const modalBtn = document.querySelector(".save-transaction-btn");
+let editingId;
+const resetBtn = document.querySelector(".reset-btn");
+
+const totalIncomeValue = document.querySelector("#total-income-value");
+const totalExpenseValue = document.querySelector("#total-expense-value");
+const currentBalanceValue = document.querySelector("#current-balance-value");
+const totalTransactionVlaue = document.querySelector("#total-transaction-value");
+
 
 function closeModal() {
   modalWindow.classList.add("hidden");
@@ -104,17 +140,16 @@ function openModal() {
 }
 
 // Getting data from local Storage
-let id;
 let LSDTrasactionsDatabase = localStorage.getItem("transactions");
 let transactionsDatabase = JSON.parse(LSDTrasactionsDatabase);
 if (!transactionsDatabase) {
   transactionsDatabase = [];
-  id = 0;
 }
-// Modal window open
+// Modal window open when clicked add-transaction-btn
 addTransactionsBtn.addEventListener("click", () => {
   openModal();
-
+modalTitle.textContent = "Add Transaction"
+modalBtn.textContent = "Save Transaction";
   const today = new Date();
   const formattedDate = today.toISOString().split("T")[0];
 
@@ -136,17 +171,21 @@ if (transactionsDatabase) {
   console.log(transactionsDatabase);
 
   loadtransactions();
+  totalIncome();
   function loadtransactions() {
     tableBody.innerHTML = "";
     for (value of transactionsDatabase) {
-      console.log(value);
+    //   console.log(value);
       tableBody.innerHTML += `<tr>
                 <td class = "date">${value.date}</td>
-                <td>${value.description}</td>
+                <td id="description-cell">${value.description}</td>
                 <td id="category-cell">${value.category}</td>
-                <td>${value.amount}</td>
-                <td><button class="edit-btn actions-btn"><i class="fa-solid fa-pen"></i></button>
-              <button class="delete-btn actions-btn"><i class="fa-solid fa-trash"></i></button></td>
+                <td class="amount-cell" id=${value.type}>
+                ${value.type == "expense" ? "-" : "+"}
+                ${fixedFormat(value.amount)}
+                </td>
+                <td><button class="edit-btn actions-btn" id=${value.id}><i class="fa-solid fa-pen"></i></button>
+              <button class="delete-btn actions-btn" id=${value.id}><i class="fa-solid fa-trash"></i></button></td>
               </tr>`;
     }
   }
@@ -154,12 +193,80 @@ if (transactionsDatabase) {
 
 // Logic for  deleting particular transition
 
+tableBody.addEventListener("click", (event) => {
+    const deleteBtn = event.target.closest(".delete-btn");
+    const editBtn = event.target.closest(".edit-btn")
+    if(deleteBtn){
+        // console.log(deleteBtn.id);
+        transactionsDatabase = transactionsDatabase.filter((elem) => {
+        //   console.log(elem.id);
+          return elem.id != deleteBtn.id;
+        });
+            console.log(transactionsDatabase);
+            loadtransactions();
+            totalIncome();
+            localStorage.setItem(
+              "transactions",
+              JSON.stringify(transactionsDatabase),
+            );
+
+    }
+
+    // LOGIC FOR EDITING THE TRANSACTION
+
+    if(editBtn){
+        modalTitle.textContent = "Edit Transaction";
+        modalBtn.textContent = "Update Transaction";
+        console.log(editBtn.id);
+        editingId = editBtn.id
+        const newTransaction = transactionsDatabase.find((elem) => {
+            return elem.id == editBtn.id;
+        })
+        console.log(newTransaction);
+        openModal();
+        modalMoneyType.value = newTransaction.type
+        modalDescription.value = newTransaction.description
+        modalAmount.value = newTransaction.amount
+        modalDate.value = newTransaction.date
+        modalCategory.value = newTransaction.category
+}
+    });
+
+// function for displaying the current currency and also proper format of the numbers (upto 2 decimal places)
+function fixedFormat(value){
+  return `${profile.currency}${Number(value).toFixed(2)}`;
+}
+
+// LOGIC FOR CURRENT TOTAL INCOME (FUNCTION TO CALCULATE THE TOTAL INCFOME)
+
+function totalIncome(){
+    let income = 0;
+    let expense = 0;
+    let count = 0;
+transactionsDatabase.forEach((elem)=>{
+    count++;
+    // console.log(elem);
+    if(elem.type=="income") income = income + Number(elem.amount)
+    if(elem.type=="expense") expense = expense + Number(elem.amount);
+});
+// console.log('income:', income);
+totalIncomeValue.textContent = fixedFormat(income);
+// console.log('expense:', expense);
+totalExpenseValue.textContent = fixedFormat(expense);
+currentBalanceValue.textContent = `${income < expense ? "-" : ""}${profile.currency}${Math.abs(income - expense).toFixed(2)}`;
+totalTransactionVlaue.textContent =`${count}`
+}
+
+
+
+
 // collecting data from modal window while pressing save transactions btn
 modalForm.addEventListener("submit", (event) => {
   event.preventDefault();
   closeModal();
 
   const transaction = {
+    type :modalMoneyType.value,
     date: modalDate.value,
     description: modalDescription.value,
     category: modalCategory.value,
@@ -167,21 +274,40 @@ modalForm.addEventListener("submit", (event) => {
     id: Date.now(),
   };
 
+// EDIT - REPLACE A TRANSACTION
+if (editingId) {
+  const editTransactionIndex = transactionsDatabase.findIndex((elem) => {
+    return elem.id == editingId;
+  });
+  console.log(editTransactionIndex);
+  transactionsDatabase.splice(editTransactionIndex,1,transaction)
+  editingId = null;
+} else {
+  //   ADDING NEW TRANSACTION
   transactionsDatabase.push(transaction);
+}
+
   // Adding data into local storage transactions database
   localStorage.setItem("transactions", JSON.stringify(transactionsDatabase));
   console.log(transactionsDatabase);
-  console.log("hello");
-  //   LSDTrasactionsDatabase = localStorage.getItem("transactions");
-  //   transactionsDatabase = JSON.parse(LSDTrasactionsDatabase);
-  //  console.log(transactionsDatabase);
-  //  calling ui
   loadtransactions();
+  totalIncome();
   modalForm.reset();
-  console.log(id);
-  id += 1;
-  console.log(id);
 });
+
+
+// RESET BUTTON
+resetBtn.addEventListener("click", (event) => {
+    transactionsDatabase = [];
+    profile = {
+      currency: "$",
+    };
+    localStorage.setItem("profile-settings", JSON.stringify(profile));
+    localStorage.setItem("transactions", JSON.stringify(transactionsDatabase));
+    loadtransactions();
+    totalIncome();
+});
+
 
 // Side Bar
 
@@ -202,3 +328,6 @@ settingsBtn.addEventListener("click", (event) => {
   dashboard.classList.add("hidden");
   dashboardBtn.classList.remove("active");
 });
+
+
+

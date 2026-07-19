@@ -25,6 +25,7 @@ html, body,main {
     --background-card:#F8F9FB;
     --border:#CCCCCC;
     --border-color: #e5e7eb;
+    --green-color:#026D2B;
 
     /* Shadow */
     --shadow:
@@ -311,7 +312,39 @@ color: var(--light-color);
     background-color: white;
 }
 .dark-mode-section{
+    width: 100%;
     padding: 16px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.toggle{
+    height: 24px;
+    width: 44px;
+    border-radius: 24px;
+    background-color:#CCCCCC;
+    cursor: pointer;
+    position: relative;
+     transition: 0.2s;
+}
+.toggle::before{
+    height: 18px;
+    width: 18px;
+    border-radius: 18px;
+    background-color: rgb(255, 255, 255);
+    content: "";
+    position: absolute;
+    margin: 3px;
+    transition: 0.2s;
+}
+input:checked + .toggle{
+    background-color :#3B82F6;
+}
+input:checked + .toggle::before{
+    transform: translateX(18px);
+}
+#toggle-check{
+    display: none;
 }
 .line{
     width: 100%;
@@ -327,6 +360,7 @@ color: var(--light-color);
     background-color: #FFF5F5;
     border-radius: 6px;
     font-weight: 600;
+    cursor: pointer;
 }
 /* .marker{
     width: 100%;
@@ -413,6 +447,7 @@ color: var(--light-color);
     padding: 4px 8px;
     border: none;
     background-color: white;
+    cursor: pointer;
 }
 
 /* Settings Section */
@@ -493,6 +528,19 @@ color: var(--light-color);
     grid-template-columns: repeat(2,1fr);
     gap: 1rem;
 }
+#description-cell{
+    font-weight: 600;
+}
+.amount-cell{
+    font-weight: 600;
+}
+#expense{
+color: darkred;
+}
+#income{
+    color: var(--green-color);
+}
+
 .save-transaction-btn{
     padding: 10px 20px;
 }
